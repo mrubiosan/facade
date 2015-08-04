@@ -2,8 +2,8 @@
 	"name" : "mrubiosan/facade",
 	"autoload" : {
 		"psr-4" : {
-			"Mrubiosan\\Facade" : "src",
-			"spec\\Mrubiosan\\Facade" : "spec"
+			"Mrubiosan\\Facade\\" : "src",
+			"spec\\Mrubiosan\\Facade\\" : "spec"
 		}
 	},
 	"require" : {
