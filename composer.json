@@ -1,5 +1,5 @@
 {
-	"name" : "Facade",
+	"name" : "mrubiosan/facade",
 	"autoload" : {
 		"psr-4" : {
 			"Mrubiosan\\Facade" : "src",
