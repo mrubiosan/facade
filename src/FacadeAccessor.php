@@ -38,7 +38,10 @@ abstract class FacadeAccessor
      * This value will be passed into the service locator.
      * @return string The name of the associated service
      */
-    abstract static public function getServiceName();
+    static public function getServiceName()
+    {
+        throw new \LogicException(__METHOD__ . ' must be implemented by subclass');
+    }
     
     /**
      * Calls the instance methods

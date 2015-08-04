@@ -8,7 +8,7 @@ class FacadeStub extends FacadeAccessor
      /* (non-PHPdoc)
       * @see \Mrubiosan\Facade\FacadeAccessor::getServiceName()
       */
-     public function getServiceName() {
+     static public function getServiceName() {
          return 'dummy';
      }
 
