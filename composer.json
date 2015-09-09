@@ -2,10 +2,14 @@
 	"name" : "mrubiosan/facade",
 	"autoload" : {
 		"psr-4" : {
-			"Mrubiosan\\Facade\\" : "src",
-			"spec\\Mrubiosan\\Facade\\" : "spec"
+			"Mrubiosan\\Facade\\" : "src"
 		}
 	},
+    "autoload-dev" : {
+        "psr-4" : {
+            "spec\\Mrubiosan\\Facade\\" : "spec"
+        }
+    },
 	"require" : {
 		"php" : ">=5.4.4"
 	},
