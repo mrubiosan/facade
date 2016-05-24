@@ -5,6 +5,7 @@ use Zend\EventManager\ListenerAggregateInterface;
 use Zend\EventManager\EventManagerInterface;
 use Zend\Mvc\MvcEvent;
 use Mrubiosan\Facade\FacadeLoader;
+use Zend\Stdlib\CallbackHandler;
 
 /**
  * Bootstraps the facade system for the zend framework
@@ -14,10 +15,19 @@ use Mrubiosan\Facade\FacadeLoader;
 class FacadeBootstrapListener implements ListenerAggregateInterface
 {
 
+    /**
+     * @var CallbackHandler
+     */
     private $listener;
-    
+
+    /**
+     * @var array
+     */
     private $aliases;
-    
+
+    /**
+     * @param array $aliases
+     */
     public function __construct(array $aliases = [])
     {
         $this->aliases = $aliases;
@@ -30,11 +40,9 @@ class FacadeBootstrapListener implements ListenerAggregateInterface
     public function attach(EventManagerInterface $events)
     {
         $this->listener = $events->attach(MvcEvent::EVENT_BOOTSTRAP, function(MvcEvent $e) {
-            if ($this->aliases) {
-                $serviceManager = $e->getApplication()->getServiceManager();
-                $facadeServiceLocator = new FacadeServiceLocator($serviceManager);
-                new FacadeLoader($facadeServiceLocator, $this->aliases);
-            }
+            $serviceManager = $e->getApplication()->getServiceManager();
+            $facadeServiceLocator = new FacadeServiceLocator($serviceManager);
+            new FacadeLoader($facadeServiceLocator, $this->aliases);
         }, 2);
     }
 
