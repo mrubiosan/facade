@@ -1,0 +1,58 @@
+<?php
+namespace Mrubiosan\Facade\Bootstrap\Zend;
+
+use Mrubiosan\Facade\ServiceLocatorAdapter\Zend2Adapter;
+use Zend\EventManager\ListenerAggregateInterface;
+use Zend\EventManager\EventManagerInterface;
+use Zend\Mvc\MvcEvent;
+use Mrubiosan\Facade\FacadeLoader;
+use Zend\Stdlib\CallbackHandler;
+
+/**
+ * Bootstraps the facade system for the zend framework
+ * @author marcrubio
+ *
+ */
+class Zend2BootstrapListener implements ListenerAggregateInterface
+{
+
+    /**
+     * @var CallbackHandler
+     */
+    private $listener;
+
+    /**
+     * @var array
+     */
+    private $aliases;
+
+    /**
+     * @param array $aliases
+     */
+    public function __construct(array $aliases = [])
+    {
+        $this->aliases = $aliases;
+    }
+    
+    /*
+     * (non-PHPdoc)
+     * @see \Zend\EventManager\ListenerAggregateInterface::attach()
+     */
+    public function attach(EventManagerInterface $events)
+    {
+        $this->listener = $events->attach(MvcEvent::EVENT_BOOTSTRAP, function(MvcEvent $e) {
+            $serviceManager = $e->getApplication()->getServiceManager();
+            $facadeServiceLocator = new Zend2Adapter($serviceManager);
+            new FacadeLoader($facadeServiceLocator, $this->aliases);
+        }, 2);
+    }
+
+    /*
+     * (non-PHPdoc)
+     * @see \Zend\EventManager\ListenerAggregateInterface::detach()
+     */
+    public function detach(EventManagerInterface $events)
+    {
+        $events->detach($this->listener);
+    }
+}
