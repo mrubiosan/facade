@@ -16,5 +16,13 @@
 	"require-dev" : {
 		"behat/behat" : "^3.2",
 		"phpspec/phpspec" : "2.*"
-	}
+	},
+	"description" : "Facade pattern ready to use",
+	"license" : "GPL-3.0",
+	"keywords" : [
+		"facade",
+		"symfony",
+		"silex",
+		"zend"
+	]
 }
