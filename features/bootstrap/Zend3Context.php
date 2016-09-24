@@ -118,7 +118,7 @@ class Zend3Context implements Context
     public function iHaveAFacadeToAServiceNamed($serviceName)
     {
         $this->facadeClassName = $this->getUniqueClassName();
-        $facadeAccessor = FacadeAccessor::class;
+        $facadeAccessor = 'Mrubiosan\Facade\FacadeAccessor';
         eval("class $this->facadeClassName extends $facadeAccessor { static public function getServiceName() { return '$serviceName'; } }");
     }
     
@@ -128,7 +128,7 @@ class Zend3Context implements Context
     public function iHaveAnUnimplementedFacade()
     {
         $this->facadeClassName = $this->getUniqueClassName();
-        $facadeAccessor = FacadeAccessor::class;
+        $facadeAccessor = 'Mrubiosan\Facade\FacadeAccessor';
         eval("class $this->facadeClassName extends $facadeAccessor {}");
     }
     
