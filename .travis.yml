@@ -5,6 +5,10 @@ php:
   - '5.6'
   - '7.0'
 install:
-  - ~/build.sh install
+  - phpenv config-rm xdebug.ini
+  - ./build.sh install
 script:
-  - ~/build.sh test
+  - ./build.sh test
+cache:
+  directories:
+    - $HOME/.composer/cache
