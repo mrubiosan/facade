@@ -1,10 +1,10 @@
 <?php
-namespace Mrubiosan\Facade\ServiceLocatorAdapter;
+namespace Mrubiosan\Facade\Framework\Symfony;
 
 use Mrubiosan\Facade\FacadeServiceLocatorInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-class SymfonyAdapter implements FacadeServiceLocatorInterface
+class ServiceLocatorAdapter implements FacadeServiceLocatorInterface
 {
     protected $container;
 

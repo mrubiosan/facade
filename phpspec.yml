@@ -1,0 +1,4 @@
+suites:
+  default:
+    namespace: Mrubiosan\Facade
+    psr4_prefix: Mrubiosan\Facade

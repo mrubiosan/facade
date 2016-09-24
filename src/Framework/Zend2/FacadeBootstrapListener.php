@@ -1,7 +1,6 @@
 <?php
-namespace Mrubiosan\Facade\Bootstrap\Zend;
+namespace Mrubiosan\Facade\Framework\Zend2;
 
-use Mrubiosan\Facade\ServiceLocatorAdapter\Zend2Adapter;
 use Zend\EventManager\ListenerAggregateInterface;
 use Zend\EventManager\EventManagerInterface;
 use Zend\Mvc\MvcEvent;
@@ -13,7 +12,7 @@ use Zend\Stdlib\CallbackHandler;
  * @author marcrubio
  *
  */
-class Zend2BootstrapListener implements ListenerAggregateInterface
+class FacadeBootstrapListener implements ListenerAggregateInterface
 {
 
     /**
@@ -42,8 +41,8 @@ class Zend2BootstrapListener implements ListenerAggregateInterface
     {
         $this->listener = $events->attach(MvcEvent::EVENT_BOOTSTRAP, function(MvcEvent $e) {
             $serviceManager = $e->getApplication()->getServiceManager();
-            $facadeServiceLocator = new Zend2Adapter($serviceManager);
-            new FacadeLoader($facadeServiceLocator, $this->aliases);
+            $facadeServiceLocator = new ServiceLocatorAdapter($serviceManager);
+            FacadeLoader::init($facadeServiceLocator, $this->aliases);
         }, 2);
     }
 

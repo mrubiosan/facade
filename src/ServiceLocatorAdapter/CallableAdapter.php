@@ -3,7 +3,7 @@ namespace Mrubiosan\Facade\ServiceLocatorAdapter;
 
 use Mrubiosan\Facade\FacadeServiceLocatorInterface;
 
-class GenericAdapter implements FacadeServiceLocatorInterface
+class CallableAdapter implements FacadeServiceLocatorInterface
 {
     private $serviceLocatorCallable;
 

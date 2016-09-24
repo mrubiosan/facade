@@ -1,5 +1,5 @@
 <?php
-namespace Mrubiosan\Facade\Bootstrap\Symfony;
+namespace Mrubiosan\Facade\Framework\Symfony;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Mrubiosan\Facade\ServiceLocatorAdapter\SymfonyAdapter;
@@ -17,7 +17,7 @@ class FacadeBundle extends Bundle
             $aliases = null;
         }
 
-        $facadeServiceLocator = new SymfonyAdapter($this->container);
-        new FacadeLoader($facadeServiceLocator, $aliases);
+        $facadeServiceLocator = new ServiceLocatorAdapter($this->container);
+        FacadeLoader::init($facadeServiceLocator, $aliases);
     }
 }

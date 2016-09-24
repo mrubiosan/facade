@@ -1,13 +1,12 @@
 {
-	"name" : "mrubiosan/facade",
 	"autoload" : {
 		"psr-4" : {
-			"Mrubiosan\\Facade\\" : "src"
+			"Mrubiosan\\Facade\\" : "../../src"
 		}
 	},
 	"autoload-dev" : {
 		"psr-4" : {
-			"spec\\Mrubiosan\\Facade\\" : "spec"
+			"spec\\Mrubiosan\\Facade\\" : "../../spec"
 		}
 	},
 	"require" : {
@@ -15,6 +14,6 @@
 	},
 	"require-dev" : {
 		"behat/behat" : "^3.2",
-		"phpspec/phpspec" : "2.*"
+		"silex/silex" : "1.*"
 	}
 }

@@ -1,5 +1,5 @@
 <?php
-namespace Mrubiosan\Facade\ServiceLocatorAdapter;
+namespace Mrubiosan\Facade\Framework\Zend2;
 
 use Mrubiosan\Facade\FacadeServiceLocatorInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
@@ -9,7 +9,7 @@ use Zend\ServiceManager\ServiceLocatorInterface;
  * @author marcrubio
  *
  */
-class Zend2Adapter implements FacadeServiceLocatorInterface {
+class ServiceLocatorAdapter implements FacadeServiceLocatorInterface {
     
     /**
      * 

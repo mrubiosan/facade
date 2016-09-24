@@ -1,0 +1,47 @@
+default:
+  suites:
+    default:
+      contexts:
+        - FeatureContext
+silex1:
+  suites:
+    default:
+      contexts:
+        - Silex1Context
+      filters:
+        tags: ~@common
+silex2:
+  suites:
+    default:
+      contexts:
+        - Silex2Context
+      filters:
+        tags: ~@common
+symfony2:
+  suites:
+    default:
+      contexts:
+        - Symfony2Context
+      filters:
+        tags: ~@common
+symfony3:
+  suites:
+    default:
+      contexts:
+        - Symfony3Context
+      filters:
+        tags: ~@common
+zend2:
+  suites:
+    default:
+      contexts:
+        - Zend2Context
+      filters:
+        tags: ~@common
+zend3:
+  suites:
+    default:
+      contexts:
+        - Zend3Context
+      filters:
+        tags: ~@common
