@@ -16,3 +16,10 @@ Scenario: I have a good facade but a service locator has not been set
   Given I have a facade to a service named "array_object"
   When I call the method "count" on that facade
   Then A "LogicException" exception should have been thrown with message "Service locator has not been set yet"
+
+Scenario: I can pass arguments to the facaded instance
+  Given I set a service locator with an instance of "ArrayObject" registered as "array_object"
+  And I have a facade to a service named "array_object"
+  When I call the method "append" with argument "foo" on that facade
+  And I call the method "count" on that facade
+  Then I get 1 as the facade return value

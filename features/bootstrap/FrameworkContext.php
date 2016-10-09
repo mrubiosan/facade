@@ -1,42 +1,37 @@
 <?php
-use Behat\Behat\Context\Context;
 use Mrubiosan\Facade\ClassAliaser;
-use Mrubiosan\Facade\ServiceLocatorAdapter\CallableAdapter;
 use Mrubiosan\Facade\FacadeAccessor;
+use Behat\Behat\Context\Context;
 
-/**
- * Defines application features from the specific context.
- */
-class FeatureContext implements Context
+abstract class FrameworkContext implements Context
 {
     use ExceptionTrait;
-    
+
     /**
      * @var string|null
      */
     private $lastAliasedClass = null;
-    
+
     /**
      * @var string|null
      */
     private $facadeClassName = null;
-    
+
     /**
      * @var mixed|null
      */
     private $facadeReturnValue = null;
-    
+
     /**
-     * Initializes context.
-     *
-     * Every scenario gets its own context instance.
-     * You can also pass arbitrary arguments to the
-     * context constructor through behat.yml.
+     * @var array
      */
-    public function __construct()
-    {
-    }
-    
+    protected $aliases = [];
+
+    /**
+     * @var boolean
+     */
+    protected $isServiceLocatorSet = false;
+
     /**
      * @AfterScenario
      */
@@ -45,7 +40,7 @@ class FeatureContext implements Context
         ClassAliaser::unregister();
         FacadeAccessor::unsetServiceLocator();
     }
-    
+
     /**
      * @Given I have registered an alias named :alias and mapped to :class
      */
@@ -54,40 +49,34 @@ class FeatureContext implements Context
         if (!class_exists($class, true)) {
             eval("class $class {}");
         }
-        
-        ClassAliaser::register([$alias => $class]);
+        $this->aliases[$alias] = $class;
         $this->lastAliasedClass = $alias;
     }
-    
+
     /**
      * @Given I have registered an alias named :alias and mapped to non existing :class
      */
     public function iHaveRegisteredAnAliasNamedAndMappedToNonExisting($alias, $class)
     {
         assert(!class_exists($class), "Class $class should not exist");
-    
-        ClassAliaser::register([$alias => $class]);
+
+        $this->aliases[$alias] = $class;
         $this->lastAliasedClass = $alias;
     }
-    
-    /**
-     * @When I unregister the class aliases
-     */
-    public function iUnregisterTheClassAliases()
-    {
-        ClassAliaser::unregister();
-    }
-    
+
     /**
      * @When I try to use that class
      */
     public function iTryToUseThatClass()
     {
+        $this->isServiceLocatorSet = true;
+        $this->bootApp();
+
         $this->callAndCatchException(function() {
             class_exists($this->lastAliasedClass, true);
         });
     }
-    
+
     /**
      * @Then I should have that class available
      */
@@ -95,31 +84,16 @@ class FeatureContext implements Context
     {
         assert(class_exists($this->lastAliasedClass, false), "Class $this->lastAliasedClass should exist");
     }
-    
-    /**
-     * @Then I should not have that class available
-     */
-    public function iShouldNotHaveThatClassAvailable()
-    {
-        assert(!class_exists($this->lastAliasedClass, false), "Class $this->lastAliasedClass should not exist");
-    }
-    
+
     /**
      * @Given I set a service locator with an instance of :type registered as :registeredName
      */
     public function iSetAServiceLocatorWithAnInstanceOfRegisteredAs($type, $registeredName)
     {
-        $object = new $type();
-        $serviceLocatorGetter = function($name) use($registeredName, $object) {
-            if ($name === $registeredName) {
-                return $object;
-            }
-        };
-        
-        $serviceLocator = new CallableAdapter($serviceLocatorGetter);
-        FacadeAccessor::setServiceLocator($serviceLocator);
+        $this->registerService($registeredName, $type);
+        $this->isServiceLocatorSet = true;
     }
-    
+
     /**
      * @Given I have a facade to a service named :serviceName
      */
@@ -129,7 +103,7 @@ class FeatureContext implements Context
         $facadeAccessor = 'Mrubiosan\Facade\FacadeAccessor';
         eval("class $this->facadeClassName extends $facadeAccessor { static public function getServiceName() { return '$serviceName'; } }");
     }
-    
+
     /**
      * @Given I have an unimplemented facade
      */
@@ -141,10 +115,23 @@ class FeatureContext implements Context
     }
 
     /**
+     * @When I call the method :methodName on that facade
+     */
+    public function iCallTheMethodOnThatFacade($methodName)
+    {
+        $this->bootApp();
+        $this->callAndCatchException(function() use($methodName) {
+            $facadeClass = $this->facadeClassName;
+            $this->facadeReturnValue = $facadeClass::$methodName();
+        });
+    }
+
+    /**
      * @When I call the method :methodName with argument :argument on that facade
      */
     public function iCallTheMethodWithArgumentOnThatFacade($methodName, $argument)
     {
+        $this->bootApp();
         $this->callAndCatchException(function() use($methodName, $argument) {
             $facadeClass = $this->facadeClassName;
             $this->facadeReturnValue = $facadeClass::$methodName($argument);
@@ -152,30 +139,23 @@ class FeatureContext implements Context
     }
 
     /**
-     * @When I call the method :methodName on that facade
-     */
-    public function iCallTheMethodOnThatFacade($methodName)
-    {
-        $this->callAndCatchException(function() use($methodName) {
-            $facadeClass = $this->facadeClassName;
-            $this->facadeReturnValue = $facadeClass::$methodName();
-        });
-    }
-    
-    /**
      * @Then I get :value as the facade return value
      */
     public function iGetAsTheFacadeReturnValue($value)
     {
         assert(isset($this->facadeReturnValue) && $this->facadeReturnValue == $value, "The facade return value does not match '$value', got '$this->facadeReturnValue'");
     }
-    
+
     /**
      * @param string $prefix
      * @return string
      */
-    private function getUniqueClassName($prefix = 'Facade')
+    protected function getUniqueClassName($prefix = 'Facade')
     {
         return $prefix.str_replace('.', '', uniqid(null, true));
     }
+
+    abstract protected function bootApp();
+
+    abstract protected function registerService($name, $type);
 }
