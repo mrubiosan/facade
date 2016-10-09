@@ -90,8 +90,6 @@ abstract class FacadeAccessor
 
         if (empty($arguments)) {
             return $callable();
-        } elseif (self::$unpackSupport) {
-            return $callable(...$arguments);
         } else {
             return call_user_func_array($callable, $arguments);
         }
