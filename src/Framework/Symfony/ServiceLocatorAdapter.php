@@ -12,7 +12,7 @@ class ServiceLocatorAdapter implements FacadeServiceLocatorInterface
     {
         $this->container = $container;
     }
-    
+
     public function get($name)
     {
         return $this->container->get($name);

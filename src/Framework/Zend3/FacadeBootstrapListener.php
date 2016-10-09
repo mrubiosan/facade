@@ -15,7 +15,6 @@ use Mrubiosan\Facade\Framework\Zend2\ServiceLocatorAdapter;
  */
 class FacadeBootstrapListener implements ListenerAggregateInterface
 {
-
     /**
      * @var CallbackHandler
      */
@@ -33,14 +32,14 @@ class FacadeBootstrapListener implements ListenerAggregateInterface
     {
         $this->aliases = $aliases;
     }
-    
+
     /*
      * (non-PHPdoc)
      * @see \Zend\EventManager\ListenerAggregateInterface::attach()
      */
     public function attach(EventManagerInterface $events, $priority = 1)
     {
-        $this->listener = $events->attach(MvcEvent::EVENT_BOOTSTRAP, function(MvcEvent $e) {
+        $this->listener = $events->attach(MvcEvent::EVENT_BOOTSTRAP, function (MvcEvent $e) {
             $serviceManager = $e->getApplication()->getServiceManager();
             $facadeServiceLocator = new ServiceLocatorAdapter($serviceManager);
             FacadeLoader::init($facadeServiceLocator, $this->aliases);

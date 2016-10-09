@@ -9,45 +9,47 @@ namespace Mrubiosan\Facade;
  */
 abstract class FacadeAccessor
 {
-
     /**
      * @var FacadeServiceLocatorInterface
      */
     static private $serviceLocator;
-    
+
     /**
      * Prevent misuse. Instances should not be extending this class, or black magic happens.
      */
-    final private function __construct() {}
-    
+    final private function __construct()
+    {
+    }
+
     /**
      * Sets the service locator
      * @param FacadeServiceLocatorInterface $serviceLocator
      */
-    final static public function setServiceLocator(FacadeServiceLocatorInterface $serviceLocator)
+    final public static function setServiceLocator(FacadeServiceLocatorInterface $serviceLocator)
     {
         self::$serviceLocator = $serviceLocator;
     }
-    
+
     /**
      * Unsets the service locator. Useful for testing or creative minds.
      */
-    final static public function unsetServiceLocator()
+    final public static function unsetServiceLocator()
     {
         self::$serviceLocator = null;
     }
-    
+
     /**
      * Returns the service from the service locator
      * @return object
-     * 
+     *
      * @throws \LogicException If no service locator has been set
      */
-    static private function getService()
+    private static function getService()
     {
         if (!isset(self::$serviceLocator)) {
             throw new \LogicException("Service locator has not been set yet");
         }
+
         return self::$serviceLocator->get(static::getServiceName());
     }
 
@@ -55,30 +57,30 @@ abstract class FacadeAccessor
      * This should be the associated service name to this facade.
      * This value will be passed into the service locator.
      * @return string The name of the associated service
-     * 
+     *
      * @throws \LogicException When not implemented by parent class
      */
-    static public function getServiceName()
+    public static function getServiceName()
     {
-        throw new \LogicException(__METHOD__ . ' must be implemented by subclass');
+        throw new \LogicException(__METHOD__.' must be implemented by subclass');
     }
-    
+
     /**
      * Calls the instance methods
      * @param string $name
      * @param array $arguments
-     * 
+     *
      * @return mixed
-     * 
+     *
      * @throws \LogicException
      */
-    static public function __callStatic($name, array $arguments)
+    public static function __callStatic($name, array $arguments)
     {
         $callable = [
             self::getService(),
-            $name
+            $name,
         ];
-        
+
         return call_user_func_array($callable, $arguments);
     }
 }

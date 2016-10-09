@@ -1,7 +1,6 @@
 <?php
 namespace Mrubiosan\Facade\Framework\Silex1;
 
-use Mrubiosan\Facade\FacadeLoader;
 use Silex\ServiceProviderInterface;
 use Silex\Application;
 use Mrubiosan\Facade\ServiceLocatorAdapter\ArrayAccessAdapter;
@@ -21,7 +20,7 @@ class FacadeProvider implements ServiceProviderInterface
         $facadeServiceLocator = new ArrayAccessAdapter($app);
         FacadeAccessor::setServiceLocator($facadeServiceLocator);
     }
-    
+
     /**
      * Bootstraps the application.
      *
@@ -29,7 +28,8 @@ class FacadeProvider implements ServiceProviderInterface
      * and should be used for "dynamic" configuration (whenever
      * a service must be requested).
      */
-    public function boot(Application $app) {
+    public function boot(Application $app)
+    {
         if ($app->offsetExists('facade.aliases')) {
             $aliases = $app->offsetGet('facade.aliases');
             ClassAliaser::register($aliases);

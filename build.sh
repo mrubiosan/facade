@@ -17,6 +17,7 @@ function install() {
 
 function test() {
     BEHATCONFIG="../../behat.yml"
+    vendor/bin/phpcs --standard=PSR2 src
     vendor/bin/phpspec run
     vendor/bin/behat --profile default
     

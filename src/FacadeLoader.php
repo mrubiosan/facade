@@ -6,13 +6,13 @@ namespace Mrubiosan\Facade;
  * @author marcrubio
  *
  */
-class FacadeLoader { 
-
+class FacadeLoader
+{
     /**
      * @param FacadeServiceLocatorInterface $serviceLocator The service locator that'll fetch the facaded services
      * @param array $aliases Aliased classes for syntax sugar. The alias as key, and the facaded class as value
      */
-    static public function init(FacadeServiceLocatorInterface $serviceLocator, array $aliases = null)
+    public static function init(FacadeServiceLocatorInterface $serviceLocator, array $aliases = null)
     {
         FacadeAccessor::setServiceLocator($serviceLocator);
         if ($aliases) {

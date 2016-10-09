@@ -18,11 +18,11 @@ class FacadeProvider implements ServiceProviderInterface, BootableProviderInterf
         } else {
             $aliases = null;
         }
-        
+
         $facadeServiceLocator = new ArrayAccessAdapter($pimple);
         FacadeLoader::init($facadeServiceLocator, $aliases);
     }
-    
+
     public function boot(Application $app)
     {
         if ($app->offsetExists('facade.aliases')) {

@@ -9,19 +9,18 @@ use Zend\ServiceManager\ServiceLocatorInterface;
  * @author marcrubio
  *
  */
-class ServiceLocatorAdapter implements FacadeServiceLocatorInterface {
-    
+class ServiceLocatorAdapter implements FacadeServiceLocatorInterface
+{
     /**
-     * 
      * @var ServiceLocatorInterface
      */
     private $zendServiceLocator;
-    
+
     public function __construct(ServiceLocatorInterface $zendServiceLocator)
     {
         $this->zendServiceLocator = $zendServiceLocator;
     }
-    
+
     public function get($name)
     {
         return $this->zendServiceLocator->get($name);

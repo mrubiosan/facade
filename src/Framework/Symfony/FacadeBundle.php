@@ -12,7 +12,7 @@ class FacadeBundle extends Bundle
         if ($this->container->hasParameter('facade.aliases')) {
             $aliases = $this->container->getParameter('facade.aliases');
         }
-        
+
         if (empty($aliases) || !is_array($aliases)) {
             $aliases = null;
         }

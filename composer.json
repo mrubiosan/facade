@@ -15,7 +15,8 @@
 	},
 	"require-dev" : {
 		"behat/behat" : "^3.2",
-		"phpspec/phpspec" : "2.*"
+		"phpspec/phpspec" : "2.*",
+		"squizlabs/php_codesniffer" : "^2.7"
 	},
 	"description" : "Facade pattern ready to use",
 	"license" : "GPL-3.0",

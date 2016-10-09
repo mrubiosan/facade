@@ -15,6 +15,7 @@ class CallableAdapter implements FacadeServiceLocatorInterface
     public function get($name)
     {
         $callable = $this->serviceLocatorCallable;
+
         return $callable($name);
     }
 }

@@ -6,7 +6,8 @@ namespace Mrubiosan\Facade;
  * @author marcrubio
  *
  */
-interface FacadeServiceLocatorInterface {
+interface FacadeServiceLocatorInterface
+{
     /**
      * Retrieves an object instance associated with $name
      * @param string $name
