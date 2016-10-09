@@ -15,6 +15,11 @@ abstract class FacadeAccessor
     static private $serviceLocator;
 
     /**
+     * @var bool
+     */
+    static private $unpackSupport = false;
+
+    /**
      * Prevent misuse. Instances should not be extending this class, or black magic happens.
      */
     final private function __construct()
@@ -28,6 +33,8 @@ abstract class FacadeAccessor
     final public static function setServiceLocator(FacadeServiceLocatorInterface $serviceLocator)
     {
         self::$serviceLocator = $serviceLocator;
+        //Even though this check would belong in __callStatic, here performs better
+        self::$unpackSupport = version_compare(PHP_VERSION, '5.6', '>=');
     }
 
     /**
@@ -81,6 +88,12 @@ abstract class FacadeAccessor
             $name,
         ];
 
-        return call_user_func_array($callable, $arguments);
+        if (empty($arguments)) {
+            return $callable();
+        } elseif (self::$unpackSupport) {
+            return $callable(...$arguments);
+        } else {
+            return call_user_func_array($callable, $arguments);
+        }
     }
 }
