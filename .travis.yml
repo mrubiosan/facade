@@ -6,7 +6,7 @@ php:
   - '7.0'
   - '7.1'
 install:
-  - phpenv config-rm xdebug.ini
+  - if [[ "$(php --version | grep -cim1 xdebug)" -ge 1 ]]; then phpenv config-rm xdebug.ini; fi
   - ./build.sh install
 script:
   - ./build.sh test
