@@ -23,23 +23,23 @@ class Geolocation extends \Mrubiosan\Facade\FacadeAccessor
 \Geolocation::getCountry('127.0.0.1');
 ```
 
-##Wiring it up
+## Wiring it up
 
-###Silex 1
+### Silex 1
 ```php
 $app->register(
     new \Mrubiosan\Facade\Framework\Silex1\FacadeProvider(),
     ['facade.aliases' => ['MyAlias' => 'To\My\Fully\Qualified\Class']]
 );
 ```
-###Silex 2
+### Silex 2
 ```php
 $app->register(
     new \Mrubiosan\Facade\Framework\Silex2\FacadeProvider(),
     ['facade.aliases' => ['MyAlias' => 'To\My\Fully\Qualified\Class']]
 );
 ```
-###Symfony 2 & 3
+### Symfony 2 & 3
 On your AppKernel.php file, add this bundle:
 ```php
 new Mrubiosan\Facade\Framework\Symfony\FacadeBundle();
@@ -51,13 +51,13 @@ facade.aliases:
   - Alias2: My\Full\Qualified\Class2
 ```
 
-###Zend Framework 2
+### Zend Framework 2
 Register ```Mrubiosan\Facade\Framework\Zend2\FacadeBootstrapListener``` as a listener
 
-###Zend Framework 3
+### Zend Framework 3
 Register ```Mrubiosan\Facade\Framework\Zend3\FacadeBootstrapListener``` as a listener
 
-###On your own
+### On your own
 First create an adapter for your service locator. You have three options available:
 * ```Mrubiosan\Facade\ServiceLocatorAdapter\ArrayAccessAdapter```: if you're using pimple you can use this.
 * ```Mrubiosan\Facade\ServiceLocatorAdapter\CallableAdapter```: you can provide a callable parameter that will receive the service name it should retrieve.
