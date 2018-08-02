@@ -7,9 +7,11 @@ php:
   - '7.1'
 install:
   - if [[ "$(php --version | grep -cim1 xdebug)" -ge 1 ]]; then phpenv config-rm xdebug.ini; fi
-  - ./build.sh install
+  - composer install --prefer-dist -n --no-suggest
 script:
-  - ./build.sh test
+  - vendor/bin/phpcs --standard=PSR2 src
+  - vendor/bin/phpspec run
+  - vendor/bin/behat --profile default
 cache:
   directories:
     - $HOME/.composer/cache
