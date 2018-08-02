@@ -1,6 +1,8 @@
 <?php
 namespace Mrubiosan\Facade;
 
+use Psr\Container\ContainerInterface;
+
 /**
  * A bridge allowing static calls from the alias to be forwarded to the instance returned by
  * the service locator
@@ -10,7 +12,7 @@ namespace Mrubiosan\Facade;
 abstract class FacadeAccessor
 {
     /**
-     * @var FacadeServiceLocatorInterface
+     * @var ContainerInterface
      */
     static private $serviceLocator;
 
@@ -23,9 +25,9 @@ abstract class FacadeAccessor
 
     /**
      * Sets the service locator
-     * @param FacadeServiceLocatorInterface $serviceLocator
+     * @param ContainerInterface $serviceLocator
      */
-    final public static function setServiceLocator(FacadeServiceLocatorInterface $serviceLocator)
+    final public static function setServiceLocator(ContainerInterface $serviceLocator)
     {
         self::$serviceLocator = $serviceLocator;
     }

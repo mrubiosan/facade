@@ -1,6 +1,8 @@
 <?php
 namespace Mrubiosan\Facade;
 
+use Psr\Container\ContainerInterface;
+
 /**
  * Convenience class for initializing the Facade features
  * @author marcrubio
@@ -9,10 +11,10 @@ namespace Mrubiosan\Facade;
 class FacadeLoader
 {
     /**
-     * @param FacadeServiceLocatorInterface $serviceLocator The service locator that'll fetch the facaded services
+     * @param ContainerInterface $serviceLocator The service locator that'll fetch the facaded services
      * @param array $aliases Aliased classes for syntax sugar. The alias as key, and the facaded class as value
      */
-    public static function init(FacadeServiceLocatorInterface $serviceLocator, array $aliases = null)
+    public static function init(ContainerInterface $serviceLocator, array $aliases = null)
     {
         FacadeAccessor::setServiceLocator($serviceLocator);
         if ($aliases) {

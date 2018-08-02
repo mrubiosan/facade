@@ -1,9 +1,11 @@
 <?php
 namespace Mrubiosan\Facade\ServiceLocatorAdapter;
 
-use Mrubiosan\Facade\FacadeServiceLocatorInterface;
+use Mrubiosan\Facade\ServiceLocatorAdapter\Exception\ContainerException;
+use Mrubiosan\Facade\ServiceLocatorAdapter\Exception\NotFoundException;
+use Psr\Container\ContainerInterface;
 
-class ArrayAccessAdapter implements FacadeServiceLocatorInterface
+class ArrayAccessAdapter implements ContainerInterface
 {
     /**
      * @var \ArrayAccess
@@ -15,8 +17,27 @@ class ArrayAccessAdapter implements FacadeServiceLocatorInterface
         $this->container = $container;
     }
 
-    public function get($name)
+    /**
+     * @inheritdoc
+     */
+    public function has($id)
     {
-        return $this->container->offsetGet($name);
+        return $this->container->offsetExists($id);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function get($id)
+    {
+        if (!$this->has($id)) {
+            throw new NotFoundException("No entry '$id' found");
+        }
+
+        try {
+            return $this->container->offsetGet($id);
+        } catch (\Throwable $e) {
+            throw new ContainerException("Could not retrieve entry '$id'", 0, $e);
+        }
     }
 }

@@ -11,7 +11,8 @@
 		}
 	},
 	"require" : {
-		"php" : ">=5.4.4"
+		"php" : ">=5.4.4",
+		"psr/container": "^1"
 	},
 	"require-dev" : {
 		"behat/behat" : "^3.2",
