@@ -83,10 +83,6 @@ abstract class FacadeAccessor
             $name,
         ];
 
-        if (empty($arguments)) {
-            return $callable();
-        } else {
-            return call_user_func_array($callable, $arguments);
-        }
+        return $callable(...$arguments);
     }
 }
