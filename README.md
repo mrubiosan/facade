@@ -1,34 +1,56 @@
 # facade
 Facade pattern for PHP [![Build Status](https://travis-ci.org/mrubiosan/facade.svg?branch=master)](https://travis-ci.org/mrubiosan/facade)
 
-Facade pattern as seen in the Laravel framework. This library allows calling a method
-on an instance through a static class. However, you are retrieving such instance through a service locator. In that sense,
-you're coupling your code with the facade, but the underlying implementation can change over time, as opposed to using singletons for example.
+As seen in the Laravel framework.
+You can call a method statically, and it will fetch an object from the container and call its method.
+
+It's very useful for unbounded services like Logging. You can call it statically but change the underlying implementation(i.e: for testing).
+
+Also a good compromise when refactoring code that uses static class access.
 
 **Usage example**
+
+
 ```php
 //First declare your facade class
-class Geolocation extends \Mrubiosan\Facade\FacadeAccessor
+namespace MyDummyNameSpace;
+
+class Foo extends \Mrubiosan\Facade\FacadeAccessor
 {
-    static public function getServiceName()
+    public static function getServiceName()
     {
-       return 'geolocation-service';
+       return 'foo'; //This is the name of the service in your container
     }
 }
+```
 
-//Now the instance will be fetched from your service locator, and the method called
-\Geolocation::getCountry('127.0.0.1');
+```php
+//Then initialize the facade system
+$exampleContainer = new \ArrayObject([
+    'foo' => new \DateTime(),
+]);
+$psrAdaptedContainer = new \Mrubiosan\Facade\ServiceLocatorAdapter\ArrayAccessAdapter($exampleContainer);
+\Mrubiosan\Facade\FacadeLoader::init($psrAdaptedContainer, ['FooAlias' => 'MyDummyNameSpace\Foo']);
+```
+
+```php
+//Ready to use
+echo \MyDummyNameSpace\Foo::getTimestamp();
+echo \FooAlias::getTimestamp();
 ```
 
 ## Wiring it up
 
-First create an adapter for your service locator. You have three options available:
+### Step 1
+If you're using a PSR11 Container, you can skip this step.
+Oterwise you'll need to use an adapter:
 * ```Mrubiosan\Facade\ServiceLocatorAdapter\ArrayAccessAdapter```: if you're using pimple you can use this.
 * ```Mrubiosan\Facade\ServiceLocatorAdapter\CallableAdapter```: you can provide a callable parameter that will receive the service name it should retrieve.
-* Implement ```Mrubiosan\Facade\FacadeServiceLocatorInterface```
 
-Afterwards, you just need to make this call
+Or straight implement ```Psr\Container\ContainerInterface```
+
+### Step 2
+Initialize the facade system
 ```php
-//Aliases are always optional
-Mrubiosan\Facade\FacadeLoader::init($yourServiceLocator, ['Alias1' => 'To\Fully\Qualified\Class']);
+Mrubiosan\Facade\FacadeLoader::init($psrContainer);
 ```

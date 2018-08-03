@@ -4,6 +4,8 @@ namespace spec\Mrubiosan\Facade\ServiceLocatorAdapter;
 
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\NotFoundExceptionInterface;
 
 class ArrayAccessAdapterSpec extends ObjectBehavior
 {
@@ -14,6 +16,15 @@ class ArrayAccessAdapterSpec extends ObjectBehavior
     function it_is_initializable()
     {
         $this->shouldHaveType('Mrubiosan\Facade\ServiceLocatorAdapter\ArrayAccessAdapter');
+    }
+
+    function it_reports_whether_it_has_entry(\ArrayAccess $container)
+    {
+        $container->offsetExists('foo')
+            ->willReturn(true, false);
+
+        $this->has('foo')->shouldBe(true);
+        $this->has('foo')->shouldBe(false);
     }
 
     function it_delegates_to_container(\ArrayAccess $container)
@@ -30,5 +41,23 @@ class ArrayAccessAdapterSpec extends ObjectBehavior
             ->shouldBeCalled();
 
         $this->get($serviceName)->shouldBe($retval);
+    }
+
+    function it_throws_exception_when_not_found()
+    {
+        $this->shouldThrow(NotFoundExceptionInterface::class)->duringGet('missing');
+    }
+
+    function it_throws_exception_on_failure_getting_the_entry(\ArrayAccess $container)
+    {
+        $container->offsetExists('dummy')
+            ->shouldBeCalled()
+            ->willReturn(true);
+
+        $container->offsetGet('dummy')
+            ->shouldBeCalled()
+            ->willThrow(\RuntimeException::class);
+
+        $this->shouldThrow(ContainerExceptionInterface::class)->duringGet('dummy');
     }
 }
