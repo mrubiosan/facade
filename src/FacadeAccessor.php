@@ -18,6 +18,7 @@ abstract class FacadeAccessor
 
     /**
      * Prevent misuse. Instances should not be extending this class, or black magic happens.
+     * @codeCoverageIgnore Covered by \Mrubiosan\Facade\Tests\Unit\FacadeAccessorTest::testItDisablesConstructor
      */
     final private function __construct()
     {
@@ -83,6 +84,7 @@ abstract class FacadeAccessor
             $name,
         ];
 
-        return $callable(...$arguments);
+        return self::getService()->$name(...$arguments);
+//        return $callable(...$arguments);
     }
 }

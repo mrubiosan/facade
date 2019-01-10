@@ -7,7 +7,7 @@
 	},
 	"autoload-dev" : {
 		"psr-4" : {
-			"spec\\Mrubiosan\\Facade\\" : "spec"
+			"Mrubiosan\\Facade\\Tests\\" : "tests"
 		}
 	},
 	"require" : {
@@ -15,16 +15,15 @@
 		"psr/container": "^1"
 	},
 	"require-dev" : {
-		"behat/behat" : "^3.2",
-		"phpspec/phpspec" : "2.*",
-		"squizlabs/php_codesniffer" : "^2.7"
+		"squizlabs/php_codesniffer" : "^2.7",
+		"phpunit/phpunit": "^7.5"
 	},
 	"description" : "Facade pattern ready to use",
 	"license" : "GPL-3.0",
 	"keywords" : [
 		"facade",
-		"symfony",
-		"silex",
-		"zend"
+		"static access",
+		"service locator",
+		"container"
 	]
 }
