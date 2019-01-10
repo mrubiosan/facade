@@ -79,12 +79,6 @@ abstract class FacadeAccessor
      */
     public static function __callStatic($name, array $arguments)
     {
-        $callable = [
-            self::getService(),
-            $name,
-        ];
-
         return self::getService()->$name(...$arguments);
-//        return $callable(...$arguments);
     }
 }
