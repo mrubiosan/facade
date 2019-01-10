@@ -1,5 +1,7 @@
 # facade
-Facade pattern for PHP [![Build Status](https://travis-ci.org/mrubiosan/facade.svg?branch=master)](https://travis-ci.org/mrubiosan/facade)
+Facade pattern for PHP
+
+[![Build Status](https://travis-ci.org/mrubiosan/facade.svg?branch=master)](https://travis-ci.org/mrubiosan/facade) [![Maintainability](https://api.codeclimate.com/v1/badges/19db78591f5b9be3e546/maintainability)](https://codeclimate.com/github/mrubiosan/facade/maintainability) [![Test Coverage](https://api.codeclimate.com/v1/badges/19db78591f5b9be3e546/test_coverage)](https://codeclimate.com/github/mrubiosan/facade/test_coverage)
 
 As seen in the Laravel framework.
 You can call a method statically, and it will fetch an object from the container and call its method.
