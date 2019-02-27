@@ -56,17 +56,7 @@ abstract class FacadeAccessor
         return self::$serviceLocator->get(static::getServiceName());
     }
 
-    /**
-     * This should be the associated service name to this facade.
-     * This value will be passed into the service locator.
-     * @return string The name of the associated service
-     *
-     * @throws \LogicException When not implemented by parent class
-     */
-    public static function getServiceName()
-    {
-        throw new \LogicException(__METHOD__.' must be implemented by subclass');
-    }
+    abstract public static function getServiceName();
 
     /**
      * Calls the instance methods

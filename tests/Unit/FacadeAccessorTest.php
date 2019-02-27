@@ -16,12 +16,6 @@ class FacadeAccessorTest extends TestCase
         FacadeAccessor::unsetServiceLocator();
     }
 
-    public function testItThrowsExceptionWhenNotImplemented()
-    {
-        $this->expectException(\LogicException::class);
-        FacadeAccessor::getServiceName();
-    }
-
     public function testItRequiresAServiceLocator()
     {
         $this->expectException(\LogicException::class);
