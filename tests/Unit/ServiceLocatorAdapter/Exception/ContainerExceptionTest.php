@@ -1,4 +1,5 @@
 <?php
+
 namespace Mrubiosan\Facade\Tests\Unit\ServiceLocatorAdapter\Exception;
 
 use Mrubiosan\Facade\ServiceLocatorAdapter\Exception\ContainerException;

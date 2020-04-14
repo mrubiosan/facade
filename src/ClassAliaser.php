@@ -1,4 +1,5 @@
 <?php
+
 namespace Mrubiosan\Facade;
 
 class ClassAliaser
@@ -6,12 +7,12 @@ class ClassAliaser
     /**
      * @var array
      */
-    static private $aliases = [];
+    private static $aliases = [];
 
     /**
      * @var callable
      */
-    static private $autoloadFn;
+    private static $autoloadFn;
 
     /**
      * Registers a class autoloader which will create the given class aliases on demand.

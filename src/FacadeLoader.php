@@ -1,4 +1,5 @@
 <?php
+
 namespace Mrubiosan\Facade;
 
 use Psr\Container\ContainerInterface;

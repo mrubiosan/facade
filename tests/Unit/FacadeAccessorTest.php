@@ -1,4 +1,5 @@
 <?php
+
 namespace Mrubiosan\Facade\Tests\Unit;
 
 use Mrubiosan\Facade\FacadeAccessor;

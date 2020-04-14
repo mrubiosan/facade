@@ -1,4 +1,5 @@
 <?php
+
 namespace Mrubiosan\Facade\Tests\Integration;
 
 use Mrubiosan\Facade\ClassAliaser;

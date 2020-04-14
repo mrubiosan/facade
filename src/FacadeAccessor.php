@@ -1,4 +1,5 @@
 <?php
+
 namespace Mrubiosan\Facade;
 
 use Psr\Container\ContainerInterface;
@@ -14,7 +15,7 @@ abstract class FacadeAccessor
     /**
      * @var ContainerInterface
      */
-    static private $serviceLocator;
+    private static $serviceLocator;
 
     /**
      * Prevent misuse. Instances should not be extending this class, or black magic happens.

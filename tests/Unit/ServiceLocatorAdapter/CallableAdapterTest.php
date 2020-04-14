@@ -1,4 +1,5 @@
 <?php
+
 namespace Mrubiosan\Facade\Tests\Unit\ServiceLocatorAdapter;
 
 use Mrubiosan\Facade\ServiceLocatorAdapter\CallableAdapter;
@@ -12,13 +13,14 @@ class CallableAdapterTest extends TestCase
 {
     public function testHasStub()
     {
-        $testSubject = new CallableAdapter(function(){});
+        $testSubject = new CallableAdapter(function () {
+        });
         $this->assertTrue($testSubject->has('foo'));
     }
 
     public function testItGetsExistingService()
     {
-        $callable = function($id) {
+        $callable = function ($id) {
             $this->assertEquals('foo', $id);
             return 'bar';
         };
@@ -29,7 +31,7 @@ class CallableAdapterTest extends TestCase
 
     public function testItThrowsContainerException()
     {
-        $callable = function($id) {
+        $callable = function ($id) {
             $this->assertEquals('foo', $id);
             throw new \RuntimeException();
         };
