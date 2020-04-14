@@ -1,4 +1,5 @@
 <?php
+
 namespace Mrubiosan\Facade\Tests\Unit\ServiceLocatorAdapter;
 
 use Mrubiosan\Facade\ServiceLocatorAdapter\ArrayAccessAdapter;

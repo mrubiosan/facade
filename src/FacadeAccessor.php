@@ -1,4 +1,5 @@
 <?php
+
 namespace Mrubiosan\Facade;
 
 use Psr\Container\ContainerInterface;
@@ -14,7 +15,7 @@ abstract class FacadeAccessor
     /**
      * @var ContainerInterface
      */
-    static private $serviceLocator;
+    private static $serviceLocator;
 
     /**
      * Prevent misuse. Instances should not be extending this class, or black magic happens.
@@ -56,6 +57,10 @@ abstract class FacadeAccessor
         return self::$serviceLocator->get(static::getServiceName());
     }
 
+    /**
+     * Returns the string identifier that will be used to get an instance from the service locator
+     * @return string
+     */
     abstract public static function getServiceName();
 
     /**
@@ -67,7 +72,7 @@ abstract class FacadeAccessor
      *
      * @throws \LogicException
      */
-    public static function __callStatic($name, array $arguments)
+    public static function __callStatic(string $name, array $arguments)
     {
         return self::getService()->$name(...$arguments);
     }
