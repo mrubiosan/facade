@@ -7,6 +7,9 @@ use Psr\Container\ContainerInterface;
 
 class CallableAdapter implements ContainerInterface
 {
+    /**
+     * @var callable
+     */
     private $serviceLocatorCallable;
 
     public function __construct(callable $serviceLocatorGetter)
