@@ -4,6 +4,7 @@ php:
   - '7.1'
   - '7.2'
   - '7.3'
+  - '7.4'
 install:
   - composer install --prefer-dist -n --no-suggest
 before_script:
@@ -11,7 +12,7 @@ before_script:
   - chmod +x ./cc-test-reporter
   - ./cc-test-reporter before-build
 script:
-  - vendor/bin/phpcs --standard=PSR2 src
+  - vendor/bin/phpcs --standard=PSR12 src tests
   - vendor/bin/phpunit --coverage-clover clover.xml
 after_script:
   - ./cc-test-reporter after-build -t clover --exit-code $TRAVIS_TEST_RESULT
